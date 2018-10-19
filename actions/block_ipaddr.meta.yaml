@@ -1,0 +1,16 @@
+---
+  name: "block_ipaddr"
+  runner_type: "action-chain"
+  description: "temporarlily blocking ip addr from accessing port 22 on target host"
+  enabled: true
+  entry_point: "chains/block_ipaddr.yaml"
+  parameters:
+    ip:
+      type: "string"
+      description: "IP address to be added in iplist ssh_ban"
+      required: true
+    host:
+      type: "string"
+      description: "host where attempt occurred"
+      required: true
+

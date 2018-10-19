@@ -1,0 +1,19 @@
+---
+    name: "spectx_failure_alert"
+    pack: "spectx"
+    description: "Rule notifying of spectx execution failure on slack channel "
+    enabled: true
+
+    trigger:
+        type: "core.st2.webhook"
+        parameters:
+            url: "spectx_failure"
+
+    criteria: {}
+
+    action:
+        ref: "chatops.post_message"
+        parameters:
+            channel: "ops-test"
+            message: "SpectX API execution failure: script:{{trigger.body.script}}, response: {{trigger.body.status_code}} message: {{trigger.body.message}}"
+

@@ -1,0 +1,33 @@
+---
+    chain:
+        -
+            name: "notify_on_slack"
+            ref: "chatops.post_message"
+            parameters:
+                channel: "ops-test"
+                message: "Ssh user enumeration attempt from {{ip}} on host {{host}}."
+            on-success: "block_ip"
+            on-failure: "report_failure"
+        -
+            name: "block_ip"
+            ref: "core.remote"
+            parameters:
+                username: "ubuntu" 
+                private_key: "/home/ubuntu/.ssh/id_rsa"
+                cmd: "sudo ipset add ssh_ban -exist {{ip}} timeout 60"
+                hosts: "{{host}}"
+            on-success: "report_success"
+            on-failure: "report_failure"
+        -
+            name: "report_success"
+            ref: "chatops.post_message"
+            parameters:
+                message: "Blocked {{ip}} on {{host}} for 60 seconds"
+                channel: "ops-test"
+        -
+            name: "report_failure"
+            ref: "chatops.post_message"
+            parameters:
+                message: "Failed banning {{ip}} on {{host}}."
+                channel: "ops-test"
+    default: "notify_on_slack"

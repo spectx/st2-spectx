@@ -1,0 +1,19 @@
+---
+    name: "ssh_enum_alert"
+    pack: "spectx"
+    description: "Rule for blocking ip attempting to enumerate users using ssh"
+    enabled: true
+
+    trigger:
+        type: "core.st2.webhook"
+        parameters:
+            url: "ssh_enum_alert"
+
+    criteria: {}
+
+    action:
+        ref: "spectx.block_ipaddr"
+        parameters:
+            ip: "{{trigger.body.src}}"
+            host: "{{trigger.body.host}}"
+

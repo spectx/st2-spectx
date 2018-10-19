@@ -1,0 +1,10 @@
+ref: spectx
+name: spectx
+description: examples of implementing alerting and auto remediation with SpectX
+keywords:
+    - spectx 
+    - monitoring
+    - alerting
+version: 0.1.0
+author: Jyri Shamov-Liiver 
+email: jyri@spectx.com
